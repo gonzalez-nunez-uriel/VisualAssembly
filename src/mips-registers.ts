@@ -1,6 +1,13 @@
+import { clear } from "console";
+
 export class MIPS_Registers {
     // I am not sure if it works this way, but it looks like declaring these here does not affect the abstract properties
     // Abstract properties are not allowed in Java. Are they allowed in TS?
+    /*
+    These variables should be private, but are left not private for the purpose of
+    testing. I wish there was a way for private fields to be accessible to a testing
+    framework for the sake of testing.
+    */
     toIndex: Map< string, number >;
     data: Array< Array< number > >;
 
@@ -46,5 +53,21 @@ export class MIPS_Registers {
         register_names.forEach( ( k, v ) => {
             this.toIndex.set( k, v );
         });
+    }
+
+    clear(): void {
+        this.constructor();
+    }
+
+    get(register_name: string): number | undefined {
+        let index = this.toIndex.get( register_name );
+        if( !index ) { // if index is undefined or null
+            //~ HANDLE EDGE CASE
+            return undefined;
+        } else {
+            let register_data_array = this.data[ index ];
+            let last_index = register_data_array.length - 1;
+            return register_data_array[ last_index ];
+        }
     }
 }
