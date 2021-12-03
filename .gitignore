@@ -105,3 +105,6 @@ dist
 
 # Folder containing temp devel files local to each clone of the project
 scraps/
+
+# Compiled product
+jsprod/
