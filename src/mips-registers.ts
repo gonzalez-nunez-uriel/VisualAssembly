@@ -62,6 +62,9 @@ export class MIPS_Registers {
     get( register_name: string ): number | undefined {
         let index = this.toIndex.get( register_name );
         if( !index ) { // if index is undefined or null
+            /*
+            This means that the register_name provided is not recognized.
+            */
             //~ HANDLE EDGE CASE
             return undefined;
         } else {
@@ -70,4 +73,6 @@ export class MIPS_Registers {
             return register_data_array[ last_index ];
         }
     }
+
+    
 }
