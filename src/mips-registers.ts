@@ -60,19 +60,30 @@ export class MIPS_Registers {
     }
 
     get( register_name: string ): number | undefined {
-        let index = this.toIndex.get( register_name );
-        if( !index ) { // if index is undefined or null
+        let data_index = this.toIndex.get( register_name );
+        if( !data_index ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */
             //~ HANDLE EDGE CASE
             return undefined;
         } else {
-            let register_data_array = this.data[ index ];
+            let register_data_array = this.data[ data_index ];
             let last_index = register_data_array.length - 1;
             return register_data_array[ last_index ];
         }
     }
 
-    
+    set( register_name: string, value: number ): void {
+        let data_index = this.toIndex.get( register_name );
+        if( !data_index ) { // if data_index is undefined or null
+            /*
+            This means that the register_name provided is not recognized.
+            */
+            //~ HANDLE EDGE CASE
+        } else {
+            let register_data_array = this.data[ data_index ];
+            register_data_array.push( value );
+        }
+    } 
 }

@@ -6,7 +6,7 @@ abstract class Registers {
     protected abstract data: Array<Array<number>>;
 
     abstract get(register_name: string): number;
-    abstract set(register_name: string): number;
+    abstract set(register_name: string, value: number): number;
     abstract clear(): void;
     abstract rewind(register_name: string): void;
 
