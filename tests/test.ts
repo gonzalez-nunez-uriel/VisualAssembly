@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import { MIPS_Registers } from '../src/mips-registers';
 
 describe('Register Tests', function() {
-    context('Testing constructor', proper_init);
+    context('Testing constructor', proper_init );
 
-    context('Testing clear() method', proper_init);
+    context('Testing clear() method', proper_init );
 
     context('Testing data manipulation', function() {
 
@@ -12,12 +12,12 @@ describe('Register Tests', function() {
 
         before( function() {
             registers = new MIPS_Registers();
-            registers.data[8].push( 4 ); // $t0 <- 4
+            registers.data[ 8 ].push( 4 ); // $t0 <- 4
         });
 
         it('Testing get() method', function() {
-            let value = registers.get('t0');
-            expect(value).to.equal( 4 );
+            let value = registers.get( 't0' );
+            expect( value ).to.equal( 4 );
         })
     });
 });
@@ -33,15 +33,15 @@ of obj.
 function proper_init() {
     let registers = new MIPS_Registers();
     it('Has 32 registers', function() {
-        expect(registers.data.length).to.equal(32);
+        expect( registers.data.length ).to.equal( 32 );
     });
     it('All registers are initialized to zero', function() {
-        for(let i=0; i < 32; i++) {
-            expect(registers.data[i][0]).to.equal(0);
+        for( let i = 0; i < 32; i++ ) {
+            expect( registers.data[ i ][ 0 ] ).to.equal( 0 );
         }
     });
     it('There are 32 register names', function() {
-        expect(registers.toIndex.size).to.equal(32);
+        expect( registers.toIndex.size ).to.equal( 32 );
     });
     // This one is going to be tedious, so I left it for latter
     //it('The register names are mapped correctly');

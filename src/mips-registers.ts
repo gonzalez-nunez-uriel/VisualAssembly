@@ -59,7 +59,7 @@ export class MIPS_Registers {
         this.constructor();
     }
 
-    get(register_name: string): number | undefined {
+    get( register_name: string ): number | undefined {
         let index = this.toIndex.get( register_name );
         if( !index ) { // if index is undefined or null
             //~ HANDLE EDGE CASE
