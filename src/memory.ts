@@ -20,6 +20,12 @@ export class Memory {
     stack_root_address: number = 0;
 
     /*
+    Stores the actual address where the global variables are stored.
+    This is the value that the $gp should be initialized to
+    */
+    data_root_address: number = 0;
+
+    /*
     Instructions will be stored as is inside this array of strings and executed one by one.
     Perhaps some preprossecing could be done, like removing any unnecessary whitespaces
     */
@@ -48,6 +54,14 @@ export class Memory {
         this.stack_root_address = address;
     }
 
+    setGlobalPointer( address: number ) {
+        this.data_root_address = address;
+    }
+
+    getRootAddresses(): [number,number,number] {
+        return [this.data_root_address, this.text_root_address, this.stack_root_address];
+    }
+
     load_source_into_memory( source_code: string ) {
         let source_lines = source_code.split( '\n' );
 
@@ -56,7 +70,7 @@ export class Memory {
 
         source_lines.forEach( line => {
             if( line == '' ) return; // empty lines are ignored
-            if( line == '.data' ) { data_flag = true; return; }
+            if( line == '.data' ) { this.setGlobalPointer( address ); data_flag = true; return; }
             if( line == '.text' ) { this.setProgramCounter( address ); data_flag = false; return; }
 
             if( data_flag ) {
