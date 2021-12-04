@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import { beforeEach } from 'mocha';
+
 import { MIPS_Registers } from '../src/mips-registers';
+
 
 describe('Register Tests', function() {
     context('Testing constructor', proper_init );
