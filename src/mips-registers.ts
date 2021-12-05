@@ -1,6 +1,6 @@
-import { clear } from "console";
+import { Registers } from './registers';
 
-export class MIPS_Registers {
+export class MIPS_Registers extends Registers{
     // I am not sure if it works this way, but it looks like declaring these here does not affect the abstract properties
     // Abstract properties are not allowed in Java. Are they allowed in TS?
     /*
@@ -8,14 +8,14 @@ export class MIPS_Registers {
     testing. I wish there was a way for private fields to be accessible to a testing
     framework for the sake of testing.
     */
-    toIndex: Map< string, number >;
-    data: Array< Array< number > >;
+    toIndex: Map<string, number>;
+    data: Array< Array<number> >;
 
     constructor() {
-        //super();
+        super();
         // Initializing values in registers with zeros
         
-        this.data = new Array< Array< number > >( 32 );
+        this.data = new Array< Array<number> >( 32 );
         /*
         For the previous line and the commented block of code that follows:
         JS has a rather clumsy way to handle uninitialized objects. In the previous
@@ -44,12 +44,12 @@ export class MIPS_Registers {
         });*/
 
         for( let i = 0; i < 32; i++ ) {
-            this.data[ i ] = new Array< number >();
+            this.data[ i ] = new Array<number>();
             this.data[ i ].push( 0 );
         }
 
         let register_names = ['zero','at','v0','v1','a0','a1','a2','a3','t0','t1','t2','t3','t4','t5','t6','t7','s0','s1','s2','s3','s4','s5','s6','s7','t8','t9','k0','k1','gp','sp','fp','ra'];
-        this.toIndex = new Map< string, number >();
+        this.toIndex = new Map<string, number>();
         register_names.forEach( ( k, v ) => {
             this.toIndex.set( k, v );
         });
@@ -59,13 +59,17 @@ export class MIPS_Registers {
         this.constructor();
     }
 
+    private getDataIndex( register_name: string ): number | undefined {
+        return this.toIndex.get( register_name );
+    }
+
     get( register_name: string ): number | undefined {
-        let data_index = this.toIndex.get( register_name );
+        let data_index = this.getDataIndex( register_name );
         if( !data_index ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */
-            //~ HANDLE EDGE CASE
+            //~ HANDLE ERROR CASE
             return undefined;
         } else {
             let register_data_array = this.data[ data_index ];
@@ -75,15 +79,28 @@ export class MIPS_Registers {
     }
 
     set( register_name: string, value: number ): void {
-        let data_index = this.toIndex.get( register_name );
+        let data_index = this.getDataIndex( register_name );
         if( !data_index ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */
-            //~ HANDLE EDGE CASE
+            //~ HANDLE ERROR CASE
         } else {
             let register_data_array = this.data[ data_index ];
             register_data_array.push( value );
         }
-    } 
+    }
+
+    rewind( register_name: string ): void {
+        let data_index = this.getDataIndex( register_name );
+        if( !data_index ) { // if data_index is undefined or null
+            /*
+            This means that the register_name provided is not recognized.
+            */
+            //~ HANDLE ERROR CASE
+        } else {
+            let register_data_array = this.data[ data_index ];
+            register_data_array.pop();
+        }
+    }
 }

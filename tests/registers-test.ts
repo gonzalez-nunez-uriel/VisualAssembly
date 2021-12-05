@@ -54,6 +54,13 @@ describe('Register Tests', function() {
 
         //~ ADD AN EXPECTED FAIL WHEN A BAD REGISTER IS ACCESSED
     });
+
+    it('Testing rewind method', function() {
+        let registers = new MIPS_Registers();
+        registers.data[ 8 ] = [ 1, 2, 3];
+        registers.rewind( 't0' );
+        expect( registers.data[ 8 ][ 1 ] ).to.equal( 2 );
+    });
 });
 
 // REUSABLE TESTS -----------------------------------------
