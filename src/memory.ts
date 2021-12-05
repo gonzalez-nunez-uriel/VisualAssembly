@@ -137,7 +137,7 @@ export class Memory {
         */
 
         //~ THIS GUARD NEEDS TO BE IMPLEMENTED
-        if( !Number.isInteger( address ) || !( address % 4 == 0 )  || (address < 0) ) { return undefined; }
+        if( !Number.isInteger( address ) || !( address % 4 == 0 )  || ( address < 0 ) ) { return undefined; }
 
         let [ internal_index, mem_handler ] = this.findHandler( address );
 
