@@ -39,23 +39,35 @@ describe('Memory Tests', function() {
 
     });
 
-    it('Get instructions', function() {
+    it('Get instructions at root', function() {
         memory.load_source_into_memory( source );
 
         let some_instruction_at_root = memory.get( 8 );
-        let some_instruction = memory.get( 20 ); 
         
         expect( some_instruction_at_root ).to.eql( 'lw $t0,0($zero)' );
+    });
+
+    it('Get instructions', function() {
+        memory.load_source_into_memory( source );
+
+        let some_instruction = memory.get( 20 ); 
+        
         expect( some_instruction ).to.eql( 'sw $t2,0($sp)' );
+    });
+
+    it('Get values at root', function() {
+        memory.load_source_into_memory( source );
+
+        let some_data_at_root = memory.get( 0 );
+
+        expect( some_data_at_root ).to.equal( 10 );
     });
 
     it('Get values', function() {
         memory.load_source_into_memory( source );
-
-        let some_data_at_root = memory.get( 0 );
+        
         let some_data = memory.get( 4 );
 
-        expect( some_data_at_root ).to.equal( 10 );
         expect( some_data ).to.equal( 12 );
     });
 });
