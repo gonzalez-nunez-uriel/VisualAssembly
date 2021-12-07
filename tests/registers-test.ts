@@ -19,12 +19,12 @@ describe('Register Tests', function() {
         });
 
         it('Testing get() method', function() {
-            let value = registers.get( 't0' );
+            let value = registers.get( '$t0' );
             expect( value ).to.equal( 4 );
         })
 
         it('Testing set() method', function() {
-            registers.set( 't1', 5 );
+            registers.set( '$t1', 5 );
             let length = registers.data[ 9 ].length;
             expect(registers.data[ 9 ][ length - 1 ]).to.equal( 5 );
         });
@@ -33,9 +33,9 @@ describe('Register Tests', function() {
             registers.data[ 9 ].push( 5 );
             registers.data[ 31 ].push( 10 );
 
-            let value1 = registers.get( 't0' );
-            let value2 = registers.get( 't1' );
-            let value3 = registers.get( 'ra' );
+            let value1 = registers.get( '$t0' );
+            let value2 = registers.get( '$t1' );
+            let value3 = registers.get( '$ra' );
 
             expect( value1 ).to.equal( 4 );
             expect( value2 ).to.equal( 5 );
@@ -43,9 +43,9 @@ describe('Register Tests', function() {
         });
 
         it('Testing multiple sets', function() {
-            registers.set( 't1', 5 );
-            registers.set( 't2', 6 );
-            registers.set( 'ra', 10 );
+            registers.set( '$t1', 5 );
+            registers.set( '$t2', 6 );
+            registers.set( '$ra', 10 );
 
             expect(registers.data[ 9 ][ registers.data[ 9 ].length - 1 ]).to.equal( 5 );
             expect(registers.data[ 10 ][ registers.data[ 10 ].length - 1 ]).to.equal( 6 );
@@ -58,7 +58,7 @@ describe('Register Tests', function() {
     it('Testing rewind method', function() {
         let registers = new MIPS_Registers();
         registers.data[ 8 ] = [ 1, 2, 3];
-        registers.rewind( 't0' );
+        registers.rewind( '$t0' );
         expect( registers.data[ 8 ][ 1 ] ).to.equal( 2 );
     });
 });
