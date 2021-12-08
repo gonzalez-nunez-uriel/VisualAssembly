@@ -108,3 +108,6 @@ scraps/
 
 # Compiled product
 jsprod/
+
+# Ignore Vim temporary files
+*.swp
