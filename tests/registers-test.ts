@@ -15,23 +15,54 @@ describe('Register Tests', function() {
 
         beforeEach( function() {
             registers = new MIPS_Registers();
-            registers.data[ 8 ].push( 4 ); // $t0 <- 4
         });
 
-        it('Testing get() method', function() {
-            let value = registers.get( '$t0' );
-            expect( value ).to.equal( 4 );
-        })
-
+        // WARNING: Tightly coupled test
         it('Testing set() method', function() {
             registers.set( '$t1', 5 );
             let length = registers.data[ 9 ].length;
             expect(registers.data[ 9 ][ length - 1 ]).to.equal( 5 );
         });
 
-        it('Testing multiple gets', function() {
-            registers.data[ 9 ].push( 5 );
-            registers.data[ 31 ].push( 10 );
+        it('Testing multiple sets on different registers', function() {
+            registers.set( '$t1', 5 );
+            registers.set( '$t2', 6 );
+            registers.set( '$ra', 10 );
+
+            expect( registers.get( '$t1' ) ).to.equal( 5 );
+            expect( registers.get( '$t2' ) ).to.equal( 6 );
+            expect( registers.get( '$ra' ) ).to.equal( 10 );
+        });
+
+        it('Tesing multiple sets on the same register', function() {
+            registers.set( '$t1', 5 );
+            registers.set( '$t1', 6 );
+            registers.set( '$t1', 10 );
+
+            expect( registers.get( '$t1' ) ).to.equal( 10 );
+        });
+
+        // WARNING: Tightly coupled test
+        it('Tesing internal representation of multiple sets on the same register', function() {
+            registers.set( '$t1', 5 );
+            registers.set( '$t1', 6 );
+            registers.set( '$t1', 10 );
+
+            expect( registers.data[ 9 ] ).to.eql( [0,5,6,10] );
+        });
+
+        it('Testing get() method', function() {
+            registers.set( '$t0', 4 );
+            let value = registers.get( '$t0' );
+            expect( value ).to.equal( 4 );
+        })
+
+        it('Testing multiple gets on different registers', function() {
+            registers.set( '$t0', 4 );
+            //registers.data[ 9 ].push( 5 );
+            registers.set( '$t1', 5 );
+            //registers.data[ 31 ].push( 10 );
+            registers.set( '$ra', 10 );
 
             let value1 = registers.get( '$t0' );
             let value2 = registers.get( '$t1' );
@@ -42,25 +73,49 @@ describe('Register Tests', function() {
             expect( value3 ).to.equal( 10 );
         });
 
-        it('Testing multiple sets', function() {
-            registers.set( '$t1', 5 );
-            registers.set( '$t2', 6 );
-            registers.set( '$ra', 10 );
-
-            expect(registers.data[ 9 ][ registers.data[ 9 ].length - 1 ]).to.equal( 5 );
-            expect(registers.data[ 10 ][ registers.data[ 10 ].length - 1 ]).to.equal( 6 );
-            expect(registers.data[ 31 ][ registers.data[ 31 ].length - 1 ]).to.equal( 10 );
-        });
-
         //~ ADD AN EXPECTED FAIL WHEN A BAD REGISTER IS ACCESSED
     });
 
-    it('Testing rewind method', function() {
-        let registers = new MIPS_Registers();
-        registers.data[ 8 ] = [ 1, 2, 3];
-        registers.rewind( '$t0' );
-        expect( registers.data[ 8 ][ 1 ] ).to.equal( 2 );
+    context('Testing rewind method', function() {
+        let registers: MIPS_Registers;
+
+        beforeEach( function() {
+            registers = new MIPS_Registers();
+        });
+
+        it('Testing one rewind', function() {
+            registers.set( '$t0', 5 );
+            registers.set( '$t0', 8 );
+    
+            registers.rewind( '$t0' );
+    
+            expect( registers.get( '$t0' ) ).to.equal( 5 );
+        });
+
+        it('Testing two rewinds', function() {
+            registers.set( '$t0', 5 );
+            registers.set( '$t0', 8 );
+            registers.set( '$t0', 10 );
+
+            registers.rewind( '$t0' );
+            registers.rewind( '$t0' );
+
+            expect( registers.get( '$t0' ) ).to.equal( 5 );
+        });
+
+        it('Testing rewing all the way to init value', function() {
+            registers.set( '$t0', 5 );
+            registers.set( '$t0', 8 );
+            registers.set( '$t0', 10 );
+
+            registers.rewind( '$t0' );
+            registers.rewind( '$t0' );
+            registers.rewind( '$t0' );
+
+            expect( registers.get( '$t0' ) ).to.equal( 0 );
+        });
     });
+    
 });
 
 // REUSABLE TESTS -----------------------------------------
