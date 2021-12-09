@@ -27,7 +27,7 @@ export class MIPS_Simulator {
         let instructions = new Map<string,Function>();
 
         //~ Is it ok to return void and undefined? I think this is disingenuous since void implies that nothings needs to be handled
-        instructions.set( 'add', function( args: string, registers: MIPS_Registers ): void | undefined {
+        instructions.set( 'add', function( args: string, registers: MIPS_Registers, memory: Memory ): void | undefined {
             let preprocessed_args = MIPS_Simulator.preprocess_args( args, 3 );
 
             //~THIS GUARD NEEDS TO BE IMPLEMENTED
@@ -43,6 +43,57 @@ export class MIPS_Simulator {
                     registers.set( preprocessed_args[ 0 ], value );
                 }   
             }   
+        });
+        
+        instructions.set( 'lw', function( args: string, registers: MIPS_Registers, memory: Memory ): void | undefined {
+            let preprocessed_args = MIPS_Simulator.preprocess_args( args, 2 );
+
+            //~ THIS GUARD NEEDS TO BE IMPLEMENTED
+            if( !preprocessed_args ) { return undefined;}
+            else {
+                let target_reg = preprocessed_args[ 0 ];
+
+                let slice_index = preprocessed_args[ 1 ].indexOf( '(' );
+                let offset = parseInt( preprocessed_args[ 1 ].slice( 0, slice_index ) );
+                let address_reg = preprocessed_args[ 1 ].slice( slice_index ).replace( '(', '' ).replace( ')', '' );
+
+                let reg_address_base = registers.get( address_reg );
+
+                //~ THIS GUARD NEEDS TO BE IMPLEMENTED
+                if( !reg_address_base ) { return undefined; }
+                else {
+                    let address = offset + reg_address_base;
+                    let value = memory.get( address );
+                    
+                    /*
+                    ~ I had an issue with the type compiler in TS. Originally I only had the guard
+                    Number.isInteger() but I guess the TS analyzer cannot understand what it means.
+                    As I understand, this guard is more than enough nut TS cannot handle it.
+                    We should consider reporting it. Here is the original code:
+
+                    if( Number.isInteger( value ) ){
+                        registers.set( target_reg, value );
+                    }
+                    else { //~ THIS GUARD NEEDS TO BE IMPLEMENTED
+                        return undefined;
+                    }
+
+                    And here is its previous form:
+                    
+                    if( !Number.isInteger( value ) ) { return undefined; }
+                    else {
+                        registers.set( target_reg, value );
+                    }
+
+                    */
+                    if( (typeof value == "number" ) && Number.isInteger( value ) ){
+                        registers.set( target_reg, value );
+                    }
+                    else { //~ THIS GUARD NEEDS TO BE IMPLEMENTED
+                        return undefined;
+                    } 
+                }
+            }
         });
 
         return instructions;
