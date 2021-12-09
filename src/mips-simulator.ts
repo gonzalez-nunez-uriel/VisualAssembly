@@ -22,10 +22,6 @@ export class MIPS_Simulator {
         this.instructions = this.build_mips_instructions();
     }
 
-    test(){
-        return 'yes';
-    }
-
     build_mips_instructions(): Map<string,Function> {
 
         let instructions = new Map<string,Function>();
