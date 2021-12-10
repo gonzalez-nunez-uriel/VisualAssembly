@@ -59,13 +59,13 @@ export class MIPS_Registers extends Registers{
         this.constructor();
     }
 
-    private getDataIndex( register_name: string ): number | undefined {
+    getDataIndex( register_name: string ): number | undefined {
         return this.toIndex.get( register_name );
     }
 
     get( register_name: string ): number | undefined {
         let data_index = this.getDataIndex( register_name );
-        if( !data_index ) { // if data_index is undefined or null
+        if( data_index == undefined ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */
@@ -80,7 +80,7 @@ export class MIPS_Registers extends Registers{
 
     set( register_name: string, value: number ): void {
         let data_index = this.getDataIndex( register_name );
-        if( !data_index ) { // if data_index is undefined or null
+        if( data_index == undefined ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */
@@ -93,7 +93,7 @@ export class MIPS_Registers extends Registers{
 
     rewind( register_name: string ): void {
         let data_index = this.getDataIndex( register_name );
-        if( !data_index ) { // if data_index is undefined or null
+        if( data_index == undefined ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */

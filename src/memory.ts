@@ -109,6 +109,7 @@ export class Memory {
     }
 
     findHandler( address: number ): [ number, Array<string> | Array<number> ]{
+        //~ WHAT IF ADDRESS IS OUT OF RANGE?
         /*
         Assumes that this.data_root_address < this.text_root_address < this.stack_root_address
         It also assumes that address is a multiple of 4.
@@ -138,7 +139,7 @@ export class Memory {
 
         //~ THIS GUARD NEEDS TO BE IMPLEMENTED
         if( !Number.isInteger( address ) || !( address % 4 == 0 )  || ( address < 0 ) ) { return undefined; }
-
+ 
         let [ internal_index, mem_handler ] = this.findHandler( address );
 
         return mem_handler[ internal_index ];

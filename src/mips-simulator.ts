@@ -31,13 +31,13 @@ export class MIPS_Simulator {
             let preprocessed_args = MIPS_Simulator.preprocess_args( args, 3 );
 
             //~THIS GUARD NEEDS TO BE IMPLEMENTED
-            if( !preprocessed_args ) { return undefined; }
+            if( preprocessed_args == undefined ) { return undefined; }
             else {
                 let addendA = registers.get( preprocessed_args[ 1 ] );
                 let addendB = registers.get( preprocessed_args[ 2 ] );
 
                 //~ THIS GUARD NEEDS TO BE IMPLEMENTED
-                if( !addendA || !addendB ) { return undefined; }
+                if( addendA == undefined || addendB == undefined ) { return undefined; }
                 else {
                     let value =  addendA + addendB; 
                     registers.set( preprocessed_args[ 0 ], value );
@@ -49,7 +49,7 @@ export class MIPS_Simulator {
             let preprocessed_args = MIPS_Simulator.preprocess_args( args, 2 );
 
             //~ THIS GUARD NEEDS TO BE IMPLEMENTED
-            if( !preprocessed_args ) { return undefined;}
+            if( preprocessed_args == undefined ) { return undefined; }
             else {
                 let target_reg = preprocessed_args[ 0 ];
 
@@ -60,7 +60,7 @@ export class MIPS_Simulator {
                 let reg_address_base = registers.get( address_reg );
 
                 //~ THIS GUARD NEEDS TO BE IMPLEMENTED
-                if( !reg_address_base ) { return undefined; }
+                if( reg_address_base == undefined ) { return undefined; }
                 else {
                     let address = offset + reg_address_base;
                     let value = memory.get( address );
@@ -137,12 +137,12 @@ export class MIPS_Simulator {
         let command = this.parse_mips( instruction );
 
         //~ THIS GUARD NEEDS TO BE IMPLEMENTED
-        if( !command ) { return undefined; }
+        if( command == undefined ) { return undefined; }
         else {
             let opt = this.instructions.get( command.opt );
 
             //~ THIS GUARD NEEDS TO BE IMPLEMENTED
-            if( !opt ) { return undefined; }
+            if( opt == undefined ) { return undefined; }
             else {
                 opt( command.args, this.registers );
             }
@@ -156,11 +156,11 @@ export class MIPS_Simulator {
         let pc = this.registers.get( 'pc' );
 
         //~ NEEDS TO BE IMPLEMENTED
-        if( !pc ) { return undefined; }
+        if( pc == undefined) { return undefined; }
         else {
             let instruction = this.memory.get( pc );
 
-            if( !instruction ) { return undefined; }
+            if( instruction == undefined) { return undefined; }
             else if( instruction ) {  }
             else {
                 this.execute( instruction );

@@ -32,18 +32,14 @@ describe('Register Tests', function() {
                 expect( value ).to.equal( 3 );
             });
 
-            it('Multiple sets and gets: emphasis on first and last register', function() {
-                registers.set('$zero',0);
-                registers.set('$ra',2);
-                registers.set('$pc',3);
-
-                let valueA = registers.get('$zero');
-                let valueB = registers.get('$ra');
-                let valueC = registers.get('$pc');
-
-                expect( valueA ).to.equal( 0 );
-                expect( valueB ).to.equal( 2 );
-                expect( valueC ).to.equal( 3 );
+            it('Set and get on each register', function() {
+                let register_names = ['$zero','$at','$v0','$v1','$a0','$a1','$a2','$a3','$t0','$t1','$t2','$t3','$t4','$t5','$t6','$t7','$s0','$s1','$s2','$s3','$s4','$s5','$s6','$s7','$t8','$t9','$k0','$k1','$gp','$sp','$fp','$ra'];
+                let value: number | undefined;
+                for( let i=0; i < 32; i++) {
+                    registers.set( register_names[i], i);
+                    value = registers.get( register_names[i]);
+                    expect( value ).to.equal( i );
+                }
             });
         });
 
