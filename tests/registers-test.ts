@@ -3,7 +3,7 @@ import { beforeEach } from 'mocha';
 
 import { MIPS_Registers } from '../src/mips-registers';
 
-
+// new comment to test if branch rename worked
 describe('Register Tests', function() {
     context('Testing constructor', proper_init );
 
