@@ -72,7 +72,7 @@ export class MIPS_Registers extends Registers{
             //~ HANDLE ERROR CASE
             return undefined;
         } else {
-            let register_data_array = this.data[ data_index -1]; // WARING: To check conditional testing, a -1 could be placed here. If so, it is a bug.
+            let register_data_array = this.data[ data_index ]; // WARING: To check conditional testing, a -1 could be placed here. If so, it is a bug.
             let last_index = register_data_array.length - 1;
             return register_data_array[ last_index ];
         }

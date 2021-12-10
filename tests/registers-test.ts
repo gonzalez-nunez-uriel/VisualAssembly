@@ -17,6 +17,36 @@ describe('Register Tests', function() {
             registers = new MIPS_Registers();
         });
 
+        context('Testing get and set methods', function() {
+            it('Simple set and get', function() {
+                registers.set('$t0', 1);
+                let value = registers.get('$t0');
+                expect( value ).to.equal( 1 );
+            });
+
+            it('Multiple sets one get', function() {
+                registers.set('$t0',1);
+                registers.set('$t0',2);
+                registers.set('$t0',3);
+                let value = registers.get('$t0');
+                expect( value ).to.equal( 3 );
+            });
+
+            it('Multiple sets and gets: emphasis on first and last register', function() {
+                registers.set('$zero',0);
+                registers.set('$ra',2);
+                registers.set('$pc',3);
+
+                let valueA = registers.get('$zero');
+                let valueB = registers.get('$ra');
+                let valueC = registers.get('$pc');
+
+                expect( valueA ).to.equal( 0 );
+                expect( valueB ).to.equal( 2 );
+                expect( valueC ).to.equal( 3 );
+            });
+        });
+
     });
 
     
