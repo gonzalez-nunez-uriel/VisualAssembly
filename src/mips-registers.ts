@@ -59,20 +59,20 @@ export class MIPS_Registers extends Registers{
         this.constructor();
     }
 
-    private getDataIndex( register_name: string ): number | undefined {
+    getDataIndex( register_name: string ): number | undefined {
         return this.toIndex.get( register_name );
     }
 
     get( register_name: string ): number | undefined {
         let data_index = this.getDataIndex( register_name );
-        if( !data_index ) { // if data_index is undefined or null
+        if( data_index == undefined ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */
             //~ HANDLE ERROR CASE
             return undefined;
         } else {
-            let register_data_array = this.data[ data_index ];
+            let register_data_array = this.data[ data_index ]; // WARING: To check conditional testing, a -1 could be placed here. If so, it is a bug.
             let last_index = register_data_array.length - 1;
             return register_data_array[ last_index ];
         }
@@ -80,20 +80,20 @@ export class MIPS_Registers extends Registers{
 
     set( register_name: string, value: number ): void {
         let data_index = this.getDataIndex( register_name );
-        if( !data_index ) { // if data_index is undefined or null
+        if( data_index == undefined ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */
             //~ HANDLE ERROR CASE
         } else {
-            let register_data_array = this.data[ data_index ];
+            let register_data_array = this.data[ data_index ]; // WARING: To check conditional testing, a -1 could be placed here. If so, it is a bug.
             register_data_array.push( value );
         }
     }
 
     rewind( register_name: string ): void {
         let data_index = this.getDataIndex( register_name );
-        if( !data_index ) { // if data_index is undefined or null
+        if( data_index == undefined ) { // if data_index is undefined or null
             /*
             This means that the register_name provided is not recognized.
             */

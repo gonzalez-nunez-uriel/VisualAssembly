@@ -3,7 +3,7 @@ import { beforeEach } from 'mocha';
 
 import { MIPS_Registers } from '../src/mips-registers';
 
-
+// new comment to test if branch rename worked
 describe('Register Tests', function() {
     context('Testing constructor', proper_init );
 
@@ -13,58 +13,39 @@ describe('Register Tests', function() {
 
         let registers: MIPS_Registers;
 
-        beforeEach( function() {
+        beforeEach( function() { // before each data manipulation test
             registers = new MIPS_Registers();
-            registers.data[ 8 ].push( 4 ); // $t0 <- 4
         });
 
-        context('Testing set() method', function(){
-            
-            it('Testing single set', function() {
-                registers.set( '$t1', 5 );
-                let length = registers.data[ 9 ].length;
-                expect(registers.data[ 9 ][ length - 1 ]).to.equal( 5 );
+        context('Testing get and set methods', function() {
+            it('Simple set and get', function() {
+                registers.set('$t0', 1);
+                let value = registers.get('$t0');
+                expect( value ).to.equal( 1 );
             });
 
-            it('Testing multiple sets', function() {
-                registers.set( '$t1', 5 );
-                registers.set( '$t2', 6 );
-                registers.set( '$ra', 10 );
-    
-                expect(registers.data[ 9 ][ registers.data[ 9 ].length - 1 ]).to.equal( 5 );
-                expect(registers.data[ 10 ][ registers.data[ 10 ].length - 1 ]).to.equal( 6 );
-                expect(registers.data[ 31 ][ registers.data[ 31 ].length - 1 ]).to.equal( 10 );
+            it('Multiple sets one get', function() {
+                registers.set('$t0',1);
+                registers.set('$t0',2);
+                registers.set('$t0',3);
+                let value = registers.get('$t0');
+                expect( value ).to.equal( 3 );
             });
-        });
 
-        context('Testing get() method', function() {
-            it('Testing single get', function() {
-                let value = registers.get( '$t0' );
-                expect( value ).to.equal( 4 );
-            })
-
-            it('Testing multiple gets', function() {
-                registers.data[ 9 ].push( 5 );
-                registers.data[ 31 ].push( 10 );
-    
-                let value1 = registers.get( '$t0' );
-                let value2 = registers.get( '$t1' );
-                let value3 = registers.get( '$ra' );
-    
-                expect( value1 ).to.equal( 4 );
-                expect( value2 ).to.equal( 5 );
-                expect( value3 ).to.equal( 10 );
+            it('Set and get on each register', function() {
+                let register_names = ['$zero','$at','$v0','$v1','$a0','$a1','$a2','$a3','$t0','$t1','$t2','$t3','$t4','$t5','$t6','$t7','$s0','$s1','$s2','$s3','$s4','$s5','$s6','$s7','$t8','$t9','$k0','$k1','$gp','$sp','$fp','$ra'];
+                let value: number | undefined;
+                for( let i=0; i < 32; i++) {
+                    registers.set( register_names[i], i);
+                    value = registers.get( register_names[i]);
+                    expect( value ).to.equal( i );
+                }
             });
         });
-        //~ ADD AN EXPECTED FAIL WHEN A BAD REGISTER IS ACCESSED
     });
 
-    it('Testing rewind method', function() {
-        let registers = new MIPS_Registers();
-        registers.data[ 8 ] = [ 1, 2, 3];
-        registers.rewind( '$t0' );
-        expect( registers.data[ 8 ][ 1 ] ).to.equal( 2 );
-    });
+    
+    
 });
 
 // REUSABLE TESTS -----------------------------------------
