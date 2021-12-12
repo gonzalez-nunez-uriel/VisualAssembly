@@ -19,16 +19,16 @@ describe('Register Tests', function() {
 
         context('Testing get and set methods', function() {
             it('Simple set and get', function() {
-                registers.set('$t0', 1);
-                let value = registers.get('$t0');
+                registers.set( '$t0', 1 );
+                let value = registers.get( '$t0' );
                 expect( value ).to.equal( 1 );
             });
 
             it('Multiple sets one get', function() {
-                registers.set('$t0',1);
-                registers.set('$t0',2);
-                registers.set('$t0',3);
-                let value = registers.get('$t0');
+                registers.set( '$t0',1 );
+                registers.set( '$t0',2 );
+                registers.set( '$t0',3 );
+                let value = registers.get( '$t0' );
                 expect( value ).to.equal( 3 );
             });
 
@@ -37,7 +37,7 @@ describe('Register Tests', function() {
                 let value: number | undefined;
                 for( let i=0; i < 32; i++) {
                     registers.set( register_names[i], i);
-                    value = registers.get( register_names[i]);
+                    value = registers.get( register_names[i] );
                     expect( value ).to.equal( i );
                 }
             });

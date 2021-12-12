@@ -7,7 +7,7 @@ import { Memory } from '../src/memory';
 describe('Memory Tests', function() {
 
     let memory: Memory;
-    let source = readFileSync(  process.cwd() + '/tests/test-file.s', {encoding: 'utf8', flag:'r'});;
+    let source = readFileSync(  process.cwd() + '/tests/test-file.s', { encoding: 'utf8', flag: 'r' } );
 
     beforeEach( function() {
         memory = new Memory();
@@ -15,8 +15,8 @@ describe('Memory Tests', function() {
 
     it('Loading source into memory', function() {
         
-        let expected_data = [10,12];
-        let expected_text = ['lw $t0,0($zero)','lw $t1,4($zero)','add $t2,$t1,$t0','sw $t2,0($sp)','halt'];
+        let expected_data = [ 10, 12 ];
+        let expected_text = [ 'lw $t0,0($zero)', 'lw $t1,4($zero)', 'add $t2,$t1,$t0', 'sw $t2,0($sp)', 'halt' ];
     
         memory.load_source_into_memory( source );
         expect( memory.data ).to.eql( expected_data );

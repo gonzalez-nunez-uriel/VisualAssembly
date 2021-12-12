@@ -9,8 +9,8 @@ describe('Simulator Tests', function() {
 
         beforeEach( function() {
             simulator = new MIPS_Simulator();
-            simulator.registers.set('$t0',1);
-            simulator.registers.set('$t1',1);
+            simulator.registers.set( '$t0',1 );
+            simulator.registers.set( '$t1',1 );
             simulator.memory.data_root_address = 0;
         });
 
@@ -20,7 +20,7 @@ describe('Simulator Tests', function() {
             expect( simulator.registers.get( '$t2' ) ).to.equal( 2 );
         });
 
-        it('Testing Load Word', function() {
+        it.skip('Testing Load Word', function() {
             let instruction = 'lw ';
         });
     });
