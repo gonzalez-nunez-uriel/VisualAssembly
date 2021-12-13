@@ -149,4 +149,20 @@ export class Memory {
 
         return mem_handler[ internal_index ];
     }
+
+    set( address: number, value: number ): void | undefined {
+        /*
+        Assumes that this.data_root_address < this.text_root_address < this.stack_root_address
+        */
+        
+        // The address must be a multiple of 4
+        // The address cannot be negative
+        // Cannot write to .text
+        //~ THIS GUARD IS BAD. NEEDS TO BE CLEANED AND IMPROVED
+        if( !( address % 4 == 0 )  || ( address < 0 ) || ( ( address >= this.text_root_address ) && ( address < this.stack_root_address ) ) ) { return undefined; }
+        
+        let [ internal_index, mem_handler ] = this.findHandler( address );
+
+        mem_handler[ internal_index ] = value;
+    }
 }

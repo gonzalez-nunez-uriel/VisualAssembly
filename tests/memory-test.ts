@@ -70,4 +70,14 @@ describe('Memory Tests', function() {
 
         expect( some_data ).to.equal( 12 );
     });
+
+    it('Set value', function() {
+        memory.load_source_into_memory( source );
+        let value  = 32;
+        let address = 4;
+        
+        memory.set( address, value );
+
+        expect( memory.get( address ) ).to.equal( value );
+    });
 });
