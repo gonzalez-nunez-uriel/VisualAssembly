@@ -12,6 +12,8 @@ describe('Simulator Tests', function() {
             simulator.registers.set( '$t0',1 );
             simulator.registers.set( '$t1',1 );
             simulator.memory.data_root_address = 0;
+            simulator.memory.text_root_address = 100; // arbitrarily large numbers
+            simulator.memory.stack_root_address = 200;
         });
 
         it('Testing Addition', function() {
@@ -25,6 +27,13 @@ describe('Simulator Tests', function() {
             let instruction = 'lw $t3, 4($zero)';
             simulator.execute( instruction );
             expect( simulator.registers.get( '$t3' ) ).to.equal( 32 );
+        });
+
+        it('Testing Store Word', function() {
+            simulator.registers.set( '$t3', 32);
+            let instruction = 'sw $t3, 4($zero)';
+            simulator.execute( instruction );
+            expect( simulator.memory.get( 4 ) ).to.equal( 32 );
         });
     });
 });

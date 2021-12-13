@@ -86,7 +86,7 @@ export class MIPS_Simulator {
                     }
 
                     */
-                   //~ what about float values? There are registers for that, right?
+                    //~ what about float values? There are registers for that, right?
                     if( (typeof value == "number" ) && Number.isInteger( value ) ){
                         registers.set( target_reg, value );
                     }
@@ -95,6 +95,39 @@ export class MIPS_Simulator {
                     } 
                 }
             }
+        });
+
+        instructions.set( 'sw', function( args: string, registers: MIPS_Registers, memory: Memory ): void | undefined {
+            let preprocessed_args = MIPS_Simulator.preprocess_args( args, 2 );
+
+            //~ THIS GUARD NEEDS TO BE IMPLEMENTED
+            if( preprocessed_args == undefined ) { return undefined; }
+            else {
+                let source_reg = preprocessed_args[ 0 ];
+
+                let slice_index = preprocessed_args[ 1 ].indexOf( '(' );
+                let offset = parseInt( preprocessed_args[ 1 ].slice( 0, slice_index ) );
+
+                let address_reg = preprocessed_args[ 1 ].slice( slice_index ).replace( '(', '' ).replace( ')', '' );
+
+                let reg_address_base = registers.get( address_reg );
+
+                //~ THIS GUARD NEEDS TO BE IMPLEMENTED
+                if( reg_address_base == undefined ) { return undefined; }
+                else {
+                    let target_address = offset + reg_address_base;
+                    let value = registers.get( source_reg );
+
+                    //~ what about float values? There are registers for that, right?
+                    if( (typeof value == "number" ) && Number.isInteger( value ) ){
+                        memory.set( target_address, value );
+                    }
+                    else { //~ THIS GUARD NEEDS TO BE IMPLEMENTED
+                        return undefined;
+                    } 
+                }
+            }
+            
         });
 
         return instructions;

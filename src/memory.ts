@@ -8,6 +8,9 @@ I have not figured out how to model the heap yet, so for now it only uses the da
 /*
 TODO
 1) Change internal representation of data to allow an undo on the 'sw' (and similar) instructions
+2) Memory should not be allowed to set is the memory layout is not defined. That is, if there are no
+   root addresses. There are two approaches: 1) have a check on Memory.set() or force the user to give
+   a file in the constructor, or some other scheme that ensures that a file is always present.
 */
 
 //~ optimize latter
