@@ -13,7 +13,7 @@ export class MIPS_Simulator {
     memory: Memory;
     isSourceLoaded: boolean;
 
-    instructions: any;
+    instructions: Map<string,Function>;
 
     constructor() {
         this.registers = new MIPS_Registers();
@@ -86,6 +86,7 @@ export class MIPS_Simulator {
                     }
 
                     */
+                   //~ what about float values? There are registers for that, right?
                     if( (typeof value == "number" ) && Number.isInteger( value ) ){
                         registers.set( target_reg, value );
                     }
@@ -144,7 +145,7 @@ export class MIPS_Simulator {
             //~ THIS GUARD NEEDS TO BE IMPLEMENTED
             if( opt == undefined ) { return undefined; }
             else {
-                opt( command.args, this.registers );
+                opt( command.args, this.registers, this.memory );
             }
         }
     }

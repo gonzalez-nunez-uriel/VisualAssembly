@@ -20,8 +20,11 @@ describe('Simulator Tests', function() {
             expect( simulator.registers.get( '$t2' ) ).to.equal( 2 );
         });
 
-        it.skip('Testing Load Word', function() {
-            let instruction = 'lw ';
+        it('Testing Load Word', function() {
+            simulator.memory.set( 4, 32 );
+            let instruction = 'lw $t3, 4($zero)';
+            simulator.execute( instruction );
+            expect( simulator.registers.get( '$t3' ) ).to.equal( 32 );
         });
     });
 });
