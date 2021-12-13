@@ -5,6 +5,11 @@ while internally that address is handled by the appropriate memory construct.
 I have not figured out how to model the heap yet, so for now it only uses the data, stack, and text objs.
 */
 
+/*
+TODO
+1) Change internal representation of data to allow an undo on the 'sw' (and similar) instructions
+*/
+
 //~ optimize latter
 function remove_front_whitespaces( text_input: string ): string {
     let index = text_input.indexOf( ' ' );

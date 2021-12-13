@@ -1,5 +1,10 @@
 import { Registers } from './registers';
 
+/*
+TODO
+1) Implement sp registers (pc, hi, lo, flags, others?)
+*/
+
 export class MIPS_Registers extends Registers{
     // I am not sure if it works this way, but it looks like declaring these here does not affect the abstract properties
     // Abstract properties are not allowed in Java. Are they allowed in TS?
