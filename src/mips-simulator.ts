@@ -1,3 +1,23 @@
+/*
+TODO
+The simulator mus require a file at all times. This way the memory object does
+not perform properly, since it cannot set its root addresses. It also does not
+make sense to have a simulation without something to run.
+
+Naively, this can be fixed by creating a new simulation object each time the
+code file is runned ... yeah of course that is always the case. I made a note
+on the previous commit where I explained that deleting the simulation obj every
+time a run is made, even thought the file is the same would be wasteful. Instead,
+each simulator obj has a checksum of the file it contains and it the new file
+provided is the same, then the simulation object just executes. If not, a new
+simulation object is made. But I failed to take into account the fact that the
+registers need to be reset and the file is going to be in constant change anyway.
+So why bother? The easiest, cleannest, and simplest way is to create a new simulator
+obj every time. The only advantage of the previous convoluted method is that the memory
+object can be reused ... nop it can't because the sw instructions can modifiy the stack
+section. So No, just go the simple way.
+*/
+
 
 import { Memory } from "./memory";
 import { MIPS_Registers } from "./mips-registers";
